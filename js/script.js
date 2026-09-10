@@ -1,5 +1,3 @@
-
-
 const key = 'Ualu49Oxpm6WIVrZ1UXb';
 
 const map = L.map('map', {
