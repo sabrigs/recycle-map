@@ -88,3 +88,9 @@ lerna-debug.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#DB
+*.db-wal
+*.db-shm
+
+.venv/
