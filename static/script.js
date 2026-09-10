@@ -39,7 +39,7 @@ search.addEventListener("focus", () => {
 
 // AI helped me here - Item name on input value
 items.forEach((item) => {
-    item.addEventListener("mousedown", () => {
+    item.addEventListener("click", () => {
         search.value = item.querySelector(".text-body").textContent.trim();
         result.classList.add("hidden");
     });
@@ -60,6 +60,6 @@ search.addEventListener("input", () => {
     })
 })
 
-search.addEventListener("blur", () => {
+search.addEventListener("mousedown", () => {
     result.classList.add("hidden");
-});
+})

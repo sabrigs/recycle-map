@@ -96,7 +96,7 @@ search {
     outline: none;
 }
 
-ul {
+search ul {
     background-color: white;
     border-radius: 0 0 16px 16px;
     padding: 8px;
@@ -106,7 +106,7 @@ ul {
     max-width: 370px;
 }
 
-li {
+search li {
     display: flex;
     align-items: center;
     padding: 4px;
@@ -115,7 +115,7 @@ li {
     cursor: pointer;
 }
 
-li:hover {
+search li:hover {
     background-color: #F2F2F2;
     border-radius: 8px;
 }
@@ -131,20 +131,122 @@ li:hover {
     color: #4D4D4D;
 }
 
-li .text-description {
+search li .text-description {
     color: #909090;
     font-size: 0.75rem;
 }
 
-li .text-body {
+search li .text-body {
     color: #4D4D4D;
 }
 
-li .content {
+search li .content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
+}
+
+div.card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    
+    max-width: 300px;
+    width: 100%;
+    padding: 16px;
+
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    z-index: 2;
+}
+
+div.card .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card .tag {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    border-radius: 500px;
+    background: #F0F1FA;
+    display: flex;
+    padding: 4px 8px;   
+    align-items: center;
+}
+
+.card .tag p {
+    color: #4D4D4D;
+    font-size: 12px;
+}
+
+.card .tag svg {
+    color: #4D4D4D;
+    font-size: 12px;
+    width: 16px;
+    height: 16px;
+}
+
+.card p.title {
+    color: #4D4D4D;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.card p.description {
+    color: #4D4D4D;
+    font-size: 12px;
+}
+
+.card li {
+    color: #4D4D4D;
+    font-size: 12px;
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+.card button.route {
+    display: flex;
+    height: 32px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    background: #384CAB;   
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button.close {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background-color: #F9F9F5;
+    border-radius: 50%;
+}
+
+.card .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 footer { 
