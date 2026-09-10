@@ -249,6 +249,21 @@ button.close {
     gap: 8px;
 }
 
+.my-div-icon {
+    border-radius: 24px 24px 24px 4px;
+    background-color: #F9F9F5;
+    border: 2px solid #4D4D4D;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-div-icon svg {
+    transform: translate(12%, 15%);
+    color: #4D4D4D
+}
+
 footer { 
     font-size: 0.8rem;
     margin: 0px 16px 16px 16px;

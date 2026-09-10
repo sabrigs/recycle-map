@@ -23,7 +23,15 @@ const mtLayer = L.maptiler.maptilerLayer({
 }).addTo(map);
 
 // Add a marker on map
-var marker = L.marker([51.5, -0.09]).addTo(map);
+var myIcon = L.divIcon({
+    className: 'my-div-icon',
+    iconSize: [38, 38],
+    iconAnchor: [0, 38],
+    html: '<i data-lucide="recycle"></i>',
+});
+
+var marker = L.marker([-30.045866, -52.887564], {icon: myIcon}).addTo(map);
+
 
 // LUCIDE ICONS
 lucide.createIcons();
