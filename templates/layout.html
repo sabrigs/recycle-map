@@ -68,7 +68,7 @@
             </div>
             <div class="content">
                 <p class="title">Title</p>
-                <p class="description">Address</p>
+                <p class="address">Address</p>
             </div>
             <ul>
                 <li>Label</li>
@@ -82,7 +82,22 @@
     <footer>
         Designed and coded by <a href="https://github.com/sabrigs">Sabrina Silva</a>
     </footer>
-        
+    <script>
+        const places = [
+            {% for place in places %}
+            {
+                id: {{ place["id"] }},
+                name: {{ place["name"]|tojson }},
+                latitude: {{ place["latitude"] }},
+                longitude: {{ place["longitude"] }},
+                category: {{ place["category"]|tojson }},
+                items: {{ place["items"]|tojson }},
+                link: {{ place["link"]|tojson }},
+                address: {{ place["address"]|tojson }}
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+    </script>
     <script src="/static/script.js"></script>
 </body>
 </html>

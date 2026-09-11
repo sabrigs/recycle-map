@@ -201,7 +201,7 @@ div.card .header {
     font-weight: 700;
 }
 
-.card p.description {
+.card p.address {
     color: #4D4D4D;
     font-size: 12px;
 }
@@ -260,7 +260,7 @@ button.close {
 }
 
 .my-div-icon svg {
-    transform: translate(12%, 15%);
+    transform: translate(18%, 19%);
     color: #4D4D4D
 }
 

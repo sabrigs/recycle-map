@@ -22,15 +22,73 @@ const mtLayer = L.maptiler.maptilerLayer({
     style: "01a07c96-46e2-7f85-8a85-a2b947659ad3"
 }).addTo(map);
 
-// Add a marker on map
-var myIcon = L.divIcon({
+// Marker icon
+const myIcon = L.divIcon({
     className: 'my-div-icon',
     iconSize: [38, 38],
     iconAnchor: [0, 38],
     html: '<i data-lucide="recycle"></i>',
 });
 
-var marker = L.marker([-30.045866, -52.887564], {icon: myIcon}).addTo(map);
+// Place details card
+const card = document.querySelector(".card");
+const cardCategory = card.querySelector(".tag p");
+const categoryIcon = card.querySelector(".tag i");
+const cardTitle = card.querySelector(".title");
+const cardAddress = card.querySelector(".address");
+const cardItems = card.querySelector("li");
+const closeCard = card.querySelector(".close");
+const routeButton = card.querySelector(".route");
+
+card.classList.add("hidden");
+
+places.forEach((place) => {
+    const marker = L.marker(
+        [place.latitude, place.longitude],
+        { icon: myIcon }
+    ).addTo(map);
+
+    marker.on("click", () => showPlace(place));
+});
+
+function showPlace(place) {
+    cardCategory.textContent = place.category || "Ponto de coleta";
+
+    const icons = {
+        "Recicláveis": "recycle",
+        "Eletrônicos": "monitor-smartphone",
+        "Pilhas e baterias": "car-battery",
+        "Orgânico": "banana",
+        "Óleo": "droplets",
+        "Lâmpadas": "lightbulb"
+    };
+
+    const iconName = icons[place.category] || "map-pin";
+    const currentIcon = card.querySelector(".tag svg, .tag i");
+
+    currentIcon.outerHTML = `<i data-lucide="${iconName}"></i>`;
+    lucide.createIcons();
+
+    cardTitle.textContent = place.name;
+    cardAddress.textContent = place.address || "Informações não disponíveis";
+    cardItems.textContent = place.items || "Itens não informados";
+
+    routeButton.onclick = () => {
+        const destination = `${place.latitude},${place.longitude}`;
+        const routeUrl = place.link || (
+            `https://www.google.com/maps/dir/?api=1&destination=${destination}`
+        );
+
+        window.open(routeUrl, "_blank", "noopener");
+    };
+
+    card.classList.remove("hidden");
+}
+
+// Botão de fechar do card
+closeCard.addEventListener('click', () => {
+    card.classList.add('hidden');
+});
 
 
 // LUCIDE ICONS
