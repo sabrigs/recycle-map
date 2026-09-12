@@ -49,21 +49,20 @@ fetch("/places")
             
             // Interação de clique no marcador
             marker.on("click", () => {
-                // Estilo do marcador quando selecionado
+
+                // Se tiver algum marcador selecionado, retorna para estilo default
                 if (selectedMarker) {
-                    const previousElement = selectedMarker.getElement();
-                    previousElement.style.backgroundColor = "";
-                    previousElement.style.border = "";
-                    previousElement.querySelector("svg").style.color = "";
+                    const previousMarker = selectedMarker.getElement();
+                    previousMarker.classList.remove("selected");
                 }
-
-                const markerElement = marker.getElement();
-                markerElement.style.backgroundColor = "#384CAB";
-                markerElement.style.border = "2px solid #384CAB";
-                markerElement.querySelector("svg").style.color = "white";
-
+                
+                // E estiliza o marcador selecionado atual
+                const currentMarker = marker.getElement();
+                currentMarker.classList.add("selected");
+               
+                // Atualiza a variável de acompanhanmento para indicar que tem um marcador selecionado
                 selectedMarker = marker;
-
+                
                 // Plota os dados no card
                 const card = document.querySelector("#card");
                 const close = card.querySelector(".close");
@@ -86,6 +85,8 @@ fetch("/places")
                 // Fecha o card
                 close.addEventListener("click", () => {
                     card.classList.add("hidden");
+                    currentMarker.classList.remove("selected");
+
                 })
             });
         });
