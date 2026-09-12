@@ -147,7 +147,7 @@ search li .content {
     gap: 4px;
 }
 
-div.card {
+#card {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -161,18 +161,22 @@ div.card {
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 
     position: absolute;
-    bottom: 24px;
-    left: 24px;
+    bottom: 16px;
+    left: 16px;
     z-index: 2;
 }
 
-div.card .header {
+#card.hidden {
+    display: none;
+}
+
+#card .header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.card .tag {
+#card .tag {
     display: flex;
     flex-direction: row;
     gap: 4px;
@@ -183,54 +187,54 @@ div.card .header {
     align-items: center;
 }
 
-.card .tag p {
+#card .tag p {
     color: #4D4D4D;
     font-size: 12px;
 }
 
-.card .tag svg {
+#card .tag svg {
     color: #4D4D4D;
     font-size: 12px;
     width: 16px;
     height: 16px;
 }
 
-.card p.title {
+#card p.title {
     color: #4D4D4D;
     font-size: 20px;
     font-weight: 700;
 }
 
-.card p.address {
+#card p.address {
     color: #4D4D4D;
     font-size: 12px;
 }
 
-.card li {
+#card p.description {
     color: #4D4D4D;
     font-size: 12px;
-    list-style: none;
 }
 
 button {
     cursor: pointer;
 }
 
-.card button.route {
+#card .route-link {
     display: flex;
-    height: 32px;
-    padding: 8px;
     justify-content: center;
     align-items: center;
-    gap: 4px;
+    height: 32px;
+    padding: 8px;
+    text-align: center;
     border-radius: 8px;
     background: #384CAB;   
     color: white;
-    border: none;
     cursor: pointer;
+    text-decoration: none;
+    
 }
 
-button.close {
+#card button.close {
     display: flex;
     width: 32px;
     height: 32px;
@@ -243,7 +247,7 @@ button.close {
     border-radius: 50%;
 }
 
-.card .content {
+#card .content {
     display: flex;
     flex-direction: column;
     gap: 8px;

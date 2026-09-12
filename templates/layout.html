@@ -56,7 +56,7 @@
         </search>
         <div class="marker">
         </div>
-        <div class="card">
+        <div id="card" class="hidden">
             <div class="header">
                 <div class="tag">
                     <i data-lucide="milestone"></i>
@@ -70,34 +70,16 @@
                 <p class="title">Title</p>
                 <p class="address">Address</p>
             </div>
-            <ul>
-                <li>Label</li>
-            </ul>
-            <button class="route">
-                <i data-lucide="milestone"></i>
+            <p class="description">Description</p>
+            <a class="route-link" href="#" target="_blank">
+                <!-- <i data-lucide="milestone"></i> -->
                 Ver rota
-            </button>
+            </a>
         </div>
     </main>
     <footer>
         Designed and coded by <a href="https://github.com/sabrigs">Sabrina Silva</a>
     </footer>
-    <script>
-        const places = [
-            {% for place in places %}
-            {
-                id: {{ place["id"] }},
-                name: {{ place["name"]|tojson }},
-                latitude: {{ place["latitude"] }},
-                longitude: {{ place["longitude"] }},
-                category: {{ place["category"]|tojson }},
-                items: {{ place["items"]|tojson }},
-                link: {{ place["link"]|tojson }},
-                address: {{ place["address"]|tojson }}
-            }{% if not loop.last %},{% endif %}
-            {% endfor %}
-        ];
-    </script>
     <script src="/static/script.js"></script>
 </body>
 </html>

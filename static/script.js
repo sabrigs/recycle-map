@@ -22,73 +22,76 @@ const mtLayer = L.maptiler.maptilerLayer({
     style: "01a07c96-46e2-7f85-8a85-a2b947659ad3"
 }).addTo(map);
 
-// Marker icon
-const myIcon = L.divIcon({
-    className: 'my-div-icon',
-    iconSize: [38, 38],
-    iconAnchor: [0, 38],
-    html: '<i data-lucide="recycle"></i>',
-});
 
-// Place details card
-const card = document.querySelector(".card");
-const cardCategory = card.querySelector(".tag p");
-const categoryIcon = card.querySelector(".tag i");
-const cardTitle = card.querySelector(".title");
-const cardAddress = card.querySelector(".address");
-const cardItems = card.querySelector("li");
-const closeCard = card.querySelector(".close");
-const routeButton = card.querySelector(".route");
+// Busca os dados da rota criada no Flask
+let selectedMarker = null;
 
-card.classList.add("hidden");
+fetch("/places")
+    .then((response) => response.json())
+    .then((places) => {
+        
+        // Cria um marcador no mapa para cada local
+        places.forEach((place) => {
+            
+            // Estilo do marcado
+            const placeIcon = L.divIcon({
+                className: "my-div-icon",
+                iconSize: [38, 38],
+                iconAnchor: [0, 38],
+                html: `<i data-lucide="${place.icon || "map-pin"}"></i>`
+            });
+            
+            // Posição do marcador
+            const marker = L.marker(
+                [place.latitude, place.longitude],
+                { icon: placeIcon }
+            ).addTo(map);
+            
+            // Interação de clique no marcador
+            marker.on("click", () => {
+                // Estilo do marcador quando selecionado
+                if (selectedMarker) {
+                    const previousElement = selectedMarker.getElement();
+                    previousElement.style.backgroundColor = "";
+                    previousElement.style.border = "";
+                    previousElement.querySelector("svg").style.color = "";
+                }
 
-places.forEach((place) => {
-    const marker = L.marker(
-        [place.latitude, place.longitude],
-        { icon: myIcon }
-    ).addTo(map);
+                const markerElement = marker.getElement();
+                markerElement.style.backgroundColor = "#384CAB";
+                markerElement.style.border = "2px solid #384CAB";
+                markerElement.querySelector("svg").style.color = "white";
 
-    marker.on("click", () => showPlace(place));
-});
+                selectedMarker = marker;
 
-function showPlace(place) {
-    cardCategory.textContent = place.category || "Ponto de coleta";
+                // Plota os dados no card
+                const card = document.querySelector("#card");
+                const close = card.querySelector(".close");
+                const title = card.querySelector(".title");
+                const address = card.querySelector(".address");
+                const category = card.querySelector(".tag p");
+                const icon = card.querySelector(".tag svg");
+                const description = card.querySelector("p.description");
+                const route = card.querySelector(".route-link");
+                
+                card.classList.remove("hidden");
+                title.textContent = place.name;
+                address.textContent = place.address;
+                category.textContent = place.category_name;
+                description.textContent = place.items;
+                route.setAttribute("href", `https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}`);
+                icon.setAttribute("data-lucide", place.icon);
+                lucide.createIcons();
+                
+                // Fecha o card
+                close.addEventListener("click", () => {
+                    card.classList.add("hidden");
+                })
+            });
+        });
 
-    const icons = {
-        "Recicláveis": "recycle",
-        "Eletrônicos": "monitor-smartphone",
-        "Pilhas e baterias": "car-battery",
-        "Orgânico": "banana",
-        "Óleo": "droplets",
-        "Lâmpadas": "lightbulb"
-    };
-
-    const iconName = icons[place.category] || "map-pin";
-    const currentIcon = card.querySelector(".tag svg, .tag i");
-
-    currentIcon.outerHTML = `<i data-lucide="${iconName}"></i>`;
-    lucide.createIcons();
-
-    cardTitle.textContent = place.name;
-    cardAddress.textContent = place.address || "Informações não disponíveis";
-    cardItems.textContent = place.items || "Itens não informados";
-
-    routeButton.onclick = () => {
-        const destination = `${place.latitude},${place.longitude}`;
-        const routeUrl = place.link || (
-            `https://www.google.com/maps/dir/?api=1&destination=${destination}`
-        );
-
-        window.open(routeUrl, "_blank", "noopener");
-    };
-
-    card.classList.remove("hidden");
-}
-
-// Botão de fechar do card
-closeCard.addEventListener('click', () => {
-    card.classList.add('hidden');
-});
+        lucide.createIcons();
+    });
 
 
 // LUCIDE ICONS
