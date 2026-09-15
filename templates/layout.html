@@ -4,56 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-sdk-js/v4.1.0/maptiler-sdk.css"/>
     <link rel="stylesheet" href="../static/style.css">
-    <!-- Leaflet -->
-     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Maptiler -->
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <script src="https://cdn.maptiler.com/maptiler-sdk-js/v4.1.0/maptiler-sdk.umd.min.js"></script>
-    <link href="https://cdn.maptiler.com/maptiler-sdk-js/v4.1.0/maptiler-sdk.css" rel="stylesheet" />
     <script src="https://cdn.maptiler.com/leaflet-maptilersdk/v4.1.0/leaflet-maptilersdk.umd.min.js"></script>
-    <!-- /Maptiler -->
-    <!-- Lucid Icons -->
     <script src="https://unpkg.com/lucide@1.43.0"></script>
     <title>Recycle Map</title>
 </head>
 <body>
+    <nav>
+        <p>Recycle Map</p>
+        <a class="button-secondary" href="">GitHub</a>
+    </nav>
     <header>
-        <h1>Recycle Map</h1>
+        <img src="/static/hero.svg" alt="">
+        <h1>E agora, onde eu levo?</h1>
+        <p>Encontre pontos de coleta perto de você e descubra onde descartar o que você não precisa mais.</p>
+        <div class="button-group">
+            <a class="button-primary" href="#map">Explorar mapa <img src="/static/icon/arrow-down.svg" alt=""></a>
+        </div>
     </header>
     <main>
         <div id="map"></div>
-        <search>
-            <form>
-                <div class="input-wrapper">
-                    <input
-                    id="input-search" 
-                    type="search"
-                    name="search"
-                    placeholder="O que você quer descartar hoje?"
-                    aria-label="Search through site content"
-                    list="cars"
-                    autocomplete="off"
-                    class="shadow">
-                    <i data-lucide="search"></i>
-                </div>
-                <div id="search-result" class="hidden">
-                    <ul>
-                        {% for row in categories %}
-                            <li class="search-result-item">
-                                <div class="avatar-icon">
-                                    <i data-lucide="{{ row['icon'] }}"></i>
-                                </div>
-                                <div class="content">
-                                    <p class="text-body">{{ row["name"] }}</p>
-                                    <p class="text-description">{{ row["description"] }}</p>
-                                </div>
-                            </li>
-                        {% endfor %}   
-                    </ul>
-                </div>
-            </form>
-        </search>
+        <form>
+            <select id="category-select" name="category-select" aria-label="Selecione a categoria para filtrar">
+                <button>
+                    <selectedcontent></selectedcontent>
+                </button>
+                <option value="all">
+                    <div class="icon"><i data-lucide="map" aria-hidden="true"></i></div>
+                    <div class="content">
+                        <span class="text-body">Mostrar tudo</span>
+                    </div>
+                </option>
+                {% for row in categories %}
+                <option value="{{ row['name'] }}">
+                    <div class="icon"><i data-lucide="{{ row['icon'] }}" alt=""></i></div>
+                    <span class="text-body">{{ row["name"] }}</span>
+                    </div>
+                </option>
+                {% endfor %}  
+            </select>  
+        </form>
         <div class="marker">
         </div>
         <div id="card" class="hidden">
@@ -72,7 +68,6 @@
             </div>
             <p class="description">Description</p>
             <a class="route-link" href="#" target="_blank">
-                <!-- <i data-lucide="milestone"></i> -->
                 Ver rota
             </a>
         </div>
@@ -80,6 +75,10 @@
     <footer>
         Designed and coded by <a href="https://github.com/sabrigs">Sabrina Silva</a>
     </footer>
+
+    <script id="recycle-map-data" type="application/json">
+        {{ {"places": places, "categories": categories} | tojson }}
+    </script>
     <script src="/static/script.js"></script>
 </body>
 </html>
