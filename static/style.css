@@ -207,7 +207,6 @@ header .wrapper {
 }
 
 header h1 {
-    font-size: 3rem;
     color: var(--color-text-heading);
     letter-spacing: -0.25rem;
     font-weight: 600;
