@@ -211,7 +211,7 @@ header h1 {
     letter-spacing: -0.25rem;
     font-weight: 600;
     letter-spacing: -0.12rem;
-    width: clamp(2rem, 30vw, 3rem);
+    font-size: clamp(2rem, 30vw, 3rem);
 }
 
 header p {
