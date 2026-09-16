@@ -3,8 +3,10 @@
 Recycle Map is a platform created to make it easier to find waste collection points in Cachoeira do Sul (Brazil), and discover where to take different types of materials.
 
 [**Access the project →**](#)
+[**Video deo**](https://youtu.be/NCOpt794lYE)
 
 ![Demo](/github/demo-03.gif)
+
 
 ## About the project
 
