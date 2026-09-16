@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
     <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-sdk-js/v4.1.0/maptiler-sdk.css"/>
@@ -17,49 +17,74 @@
 </head>
 <body>
     <nav>
-        <p>Recycle Map</p>
-        <a class="button-secondary" href="">GitHub</a>
+        <div class="left">
+            <p class="logo">Recycle Map</p>
+            <div class="location">
+                <img src="/static/icon/map-pin.svg" alt="" aria-hidden="true">
+                <p>Cachoeira do Sul</p>
+            </div>
+        </div>
+        <div class="right">
+            <a class="button-secondary" href="https://github.com/sabrigs" aria-label="Acesse o projeto no GitHub">
+                <img src="/static/icon/github.svg" alt="" aria-hidden="true">
+                GitHub
+            </a>
+        </div>
     </nav>
     <header>
-        <img src="/static/hero.svg" alt="">
-        <h1>E agora, onde eu levo?</h1>
-        <p>Encontre pontos de coleta perto de você e descubra onde descartar o que você não precisa mais.</p>
-        <div class="button-group">
-            <a class="button-primary" href="#map">Explorar mapa <img src="/static/icon/arrow-down.svg" alt=""></a>
+        <img src="/static/hero.svg" alt="" aria-hidden="true">
+        <div class="wrapper">
+            <h1>E agora, onde eu levo?</h1>
+            <p>Encontre pontos de coleta em Cachoeira do Sul e descubra onde descartar o que você não precisa mais.</p>
         </div>
+        <a class="button-primary" href="#map">
+            Explorar mapa
+            <img src="/static/icon/arrow-down.svg" alt="" aria-hidden="true">
+        </a>
     </header>
-    <main>
-        <div id="map"></div>
+    <section>
         <form>
-            <select id="category-select" name="category-select" aria-label="Selecione a categoria para filtrar">
+            <select id="category-select" name="category-select" aria-label="Selecione uma opção para filtrar">
                 <button>
                     <selectedcontent></selectedcontent>
                 </button>
                 <option value="all">
-                    <div class="icon"><i data-lucide="map" aria-hidden="true"></i></div>
-                    <div class="content">
-                        <span class="text-body">Mostrar tudo</span>
+                    <div class="icon">
+                        <i data-lucide="sliders-horizontal" alt="" aria-hidden="true"></i>
                     </div>
+                    <span class="text-body">Mostrar tudo</span>
                 </option>
                 {% for row in categories %}
                 <option value="{{ row['name'] }}">
-                    <div class="icon"><i data-lucide="{{ row['icon'] }}" alt=""></i></div>
-                    <span class="text-body">{{ row["name"] }}</span>
+                    <div class="icon">
+                        <i data-lucide="{{ row['icon'] }}" alt="" aria-hidden="true"></i>
                     </div>
+                    <span class="text-body">{{ row["name"] }}</span>
                 </option>
                 {% endfor %}  
             </select>  
         </form>
-        <div class="marker">
+        <div class="controls">
+            <div class="zoom-control">
+                <button class="zoom-in" aria-label="Aumentar zoom">
+                    <i data-lucide="zoom-in" alt="" aria-hidden="true"></i>
+                </button>
+                <button class="zoom-out" aria-label="Diminuir zoom">
+                    <i data-lucide="zoom-out" aria-hidden="true"></i>
+                </button>
+            </div>
+            <button class="centralize-view" aria-label="Centralizar mapa">
+                <i data-lucide="scan" aria-hidden="true"></i>
+            </button>
         </div>
         <div id="card" class="hidden">
             <div class="header">
                 <div class="tag">
-                    <i data-lucide="milestone"></i>
+                    <i data-lucide="milestone" alt="" aria-hidden="true"></i>
                     <p>Label</p>
                 </div>
-                <button class="close">
-                    <i data-lucide="x"></i>
+                <button class="close" aria-label="Fechar">
+                    <i data-lucide="x" alt="" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="content">
@@ -67,15 +92,15 @@
                 <p class="address">Address</p>
             </div>
             <p class="description">Description</p>
-            <a class="route-link" href="#" target="_blank">
+            <a class="route-link button-primary" href="#" target="_blank">
                 Ver rota
             </a>
         </div>
-    </main>
+        <div id="map"></div>
+    </section>
     <footer>
         Designed and coded by <a href="https://github.com/sabrigs">Sabrina Silva</a>
     </footer>
-
     <script id="recycle-map-data" type="application/json">
         {{ {"places": places, "categories": categories} | tojson }}
     </script>

@@ -1,4 +1,3 @@
-// MAP
 // Create map with Leaflet
 const map = L.map('map', {
     zoomControl: false,
@@ -6,14 +5,27 @@ const map = L.map('map', {
     scrollWheelZoom: false
 }).setView([-30.03488, -52.89261], 14);
 
-// Set controls settings
-L.control.zoom({
-    position: "bottomright",
-    zoomInText: '+',
-    zoomOutText: '−',
-    zoomInTitle: 'Aumentar zoom',
-    zoomOutTitle: 'Diminuir zoom'
-}).addTo(map);
+
+// Zoom controls
+const zoomInButton = document.querySelector(".zoom-in");
+const zoomOutButton = document.querySelector(".zoom-out");
+
+zoomInButton.addEventListener('click', () => {
+    map.zoomIn();
+});
+
+zoomOutButton.addEventListener('click', () => {
+    map.zoomOut();
+});
+
+
+// Set location to Cachoeira do Sul
+const button = document.querySelector(".centralize-view");
+
+button.addEventListener('click', () => {
+    map.setView([-30.03488, -52.89261], 14)
+});
+
 
 // MapTiler API Key
 const key = 'Ualu49Oxpm6WIVrZ1UXb';
@@ -24,13 +36,13 @@ const mtLayer = L.maptiler.maptilerLayer({
     style: "01a07c96-46e2-7f85-8a85-a2b947659ad3",
 }).addTo(map);
 
-
-// Dados consultados pelo Flask e enviados pelo template via Jinja
+// Get data from Jinja tamplate
 const dataElement = document.querySelector("#recycle-map-data");
 const { places, categories } = JSON.parse(dataElement.textContent);
 
 let selectedMarker = null;
 const markers = [];
+
 const markerCluster = L.markerClusterGroup({
     iconCreateFunction: (cluster) => {
         const total = cluster.getChildCount();
@@ -44,16 +56,22 @@ const markerCluster = L.markerClusterGroup({
         }
 
         return L.divIcon({
-            // html: `<span>${total}</span>`,
             className: `custom-cluster custom-cluster-${size}`,
             iconSize: L.point(18, 18)
         });
     }
 });
 
-// Cria um marcador no mapa para cada local
+// Create marker for each place
+function refreshMapIcons() {
+    requestAnimationFrame(() => {
+        lucide.createIcons();
+    });
+}
+
 places.forEach((place) => {
-    // Estilo do marcador
+    
+    // Style
     const placeIcon = L.divIcon({
         className: "my-div-icon",
         iconSize: [38, 38],
@@ -61,25 +79,24 @@ places.forEach((place) => {
         html: `<i data-lucide="${place.icon || "map-pin"}"></i>`
     });
 
-    // Posição do marcador
+    // Position
     const marker = L.marker(
         [place.latitude, place.longitude],
         { icon: placeIcon }
     );
 
-    // Salvar o marcador junto com a categoria
+    // Save marker with category
     markers.push({
         marker: marker,
         category: place.category_name
     });
 
     markerCluster.addLayer(marker);
-    lucide.createIcons();
+    marker.on("add", refreshMapIcons);
 
-    // Interação de clique no marcador
+    // Marker click event
     marker.on("click", () => {
 
-        // Se tiver algum marcador selecionado, retorna para estilo default
         if (selectedMarker) {
             const previousMarker = selectedMarker.getElement();
 
@@ -88,13 +105,12 @@ places.forEach((place) => {
             }
         }
 
-        // Estiliza o marcador selecionado atual
         const currentMarker = marker.getElement();
         currentMarker.classList.add("selected");
 
         selectedMarker = marker;
 
-        // Plota os dados no card
+        // Card
         const card = document.querySelector("#card");
         const close = card.querySelector(".close");
         const title = card.querySelector(".title");
@@ -111,7 +127,7 @@ places.forEach((place) => {
         description.textContent = place.items;
         route.setAttribute("href", `https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}`);
         icon.setAttribute("data-lucide", place.icon || "map-pin");
-        lucide.createIcons();
+        refreshMapIcons();
 
         close.onclick = () => {
             card.classList.add("hidden");
@@ -127,19 +143,15 @@ places.forEach((place) => {
 
 map.addLayer(markerCluster);
 
-function refreshMapIcons() {
-    lucide.createIcons();
-}
-
+markerCluster.on("layeradd", refreshMapIcons);
 markerCluster.on("animationend", refreshMapIcons);
 map.on("zoomend", refreshMapIcons);
+map.on("moveend", refreshMapIcons);
 
 
-
-// SEARCH
+// Filter
 const categorySelect = document.querySelector("#category-select");
 
-// Retorna true quando o marcador pertence à categoria selecionada
 function matchesAllFilters(marker) {
     if (categorySelect.value === "all") {
         return true;
@@ -160,11 +172,11 @@ function applyAllFilters() {
             }
         }
     });
-    lucide.createIcons();
+    refreshMapIcons();
 }
 
 categorySelect.addEventListener("change", () => {
     applyAllFilters();
 });
 
-lucide.createIcons();
+refreshMapIcons();
