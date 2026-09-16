@@ -212,6 +212,7 @@ header h1 {
     letter-spacing: -0.25rem;
     font-weight: 600;
     letter-spacing: -0.12rem;
+    width: clamp(2rem, 30vw, 3rem);
 }
 
 header p {
@@ -219,7 +220,7 @@ header p {
     text-wrap: balance;
 }
 
-header img {
+header .hero {
     width: clamp(290px, 30vw, 390px);
 }
 
