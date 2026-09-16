@@ -151,6 +151,8 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -164,7 +166,8 @@ nav .left {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
 .left .logo {
@@ -214,6 +217,10 @@ header h1 {
 header p {
     color: var(--color-text-body);
     text-wrap: balance;
+}
+
+header img {
+    width: clamp(290px, 30vw, 390px);
 }
 
 section {
@@ -543,6 +550,7 @@ aside {
     width: 100%;
     margin-inline: auto;
     margin-block: 32px;
+    padding: 16px;
 }
 
 aside .title {
