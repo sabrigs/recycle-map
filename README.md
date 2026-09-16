@@ -4,9 +4,7 @@ Recycle Map is a platform created to make it easier to find waste collection poi
 
 [**Access the project →**](#)
 
-<img src="/github/demo-01.png" alt="" aria-hidden="true">
-<img src="/github/demo-02.png" alt="" aria-hidden="true">
-<img src="/github/demo-03.gif" alt="" aria-hidden="true">
+![Demo](/github/demo-03.gif)
 
 ## About the project
 
