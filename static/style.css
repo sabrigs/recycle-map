@@ -213,6 +213,7 @@ header h1 {
 
 header p {
     color: var(--color-text-body);
+    text-wrap: balance;
 }
 
 section {
