@@ -215,6 +215,7 @@ header h1 {
 }
 
 header p {
+    font-size: 1.25rem;
     color: var(--color-text-body);
     text-wrap: balance;
 }
