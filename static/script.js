@@ -28,7 +28,7 @@ button.addEventListener('click', () => {
 
 
 // MapTiler API Key
-const key = 'Ualu49Oxpm6WIVrZ1UXb';
+const key = '2mzo0Ao9VwvIrAmXuy1d';
 
 // Load my custom skin from MapTiler
 const mtLayer = L.maptiler.maptilerLayer({
