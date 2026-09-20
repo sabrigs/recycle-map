@@ -225,19 +225,16 @@ header .hero {
 }
 
 section {
-    height: calc(100vh - 100px);
+    height: 100vh;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     position: relative;
     background-color: var(--color-bg-page);
-    border-radius: 16px;
-    margin: 16px;
-    border: 1px solid var(--color-border-subtle);
 }
 
 #map {
     flex: 1;
-    border-radius: 16px;
     z-index: 1;
 }
 
@@ -310,7 +307,7 @@ div.leaflet-control-attribution.leaflet-control a {
 form {
     position: absolute;
     left: 16px;
-    bottom: 16px;
+    bottom: 24px;
     max-width: 240px;
     width: 100%;
     z-index: 2;
